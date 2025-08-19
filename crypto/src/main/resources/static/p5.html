@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CoinMatrix</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body{
+      font-family: Arial, sans-serif;
+      background: #fff;
+      color: #333;
+      margin: 0;
+      padding: 5px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 15px;
+    }
+
+    thead {
+      background-color: #fff;
+    }
+
+    th, td {
+      padding: 14px 20px;
+      text-align: left;
+      border-collapse: collapse;
+    }
+
+    td:last-child {
+      width: 150px; /* or whatever fits your graph */
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    th {
+      font-weight: 600;
+      color: #555;
+      border-collapse: collapse;
+    }
+
+    td img {
+      vertical-align: right;
+      border-radius: 50%; 
+    }
+
+    .sparkline {
+      display: block;
+      margin: 0;            /* remove auto-centering */
+      max-width: 100px;     /* uniform width */
+    }
+
+    tr:hover {
+      background-color: #f5f5f5;
+    }
+
+    .green {
+      color: #16c784; 
+    }
+
+    .red {
+      color: #ea3943; 
+    }
+
+    canvas {
+      display: block;
+      margin: auto;
+    }
+    
+    .top-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 40px;
+      background-color: #fff;
+      color: rgb(7, 7, 7);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      border-bottom:  1px solid #e5e5e5;
+    }
+    
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: gold;
+      display: flex;
+      align-items: center;
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 25px;
+    }
+
+    .nav-links a {
+      color: rgb(15, 15, 15);
+      text-decoration: none;
+      font-size: 16px;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: gold;
+    }
+
+    .auth-buttons {
+      display: flex;
+      gap: 4px;
+    }
+
+    .auth-btn {
+      padding: 8px 16px;
+      background: gold;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    
+    .auth-btn:hover {
+      background-color: #ffd700;
+    }
+    
+    .sub-header {
+        display: flex;
+        justify-content: space-between;
+        background-color: #fff;
+        padding: 12px 40px;
+        align-items: flex-start;
+        border-bottom: 1px solid #e5e5e5;
+        color:rgb(94, 94, 94);
+        font-style: normal;
+        font-weight: 400;
+        white-space: nowrap;
+        flex-wrap: wrap;
+    }
+    
+    .crypto-stats {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        align-items: flex-start;
+    }
+
+    .search-bar input{
+        padding: 4px 12px;
+        border: 1px solid #ccc;
+        border-radius: 20px;
+        outline: none;
+        font-size: 14px;
+    }
+
+    .subnav {
+        display: flex;
+        gap: 20px;
+        padding: 12px 40px;
+        background: #fff;
+        border-bottom: 1px solid #ddd;
+        flex-wrap: wrap;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .subnav-item {
+        padding: 8px 12px;
+        color: #3b3f5c;
+        text-decoration: none;
+        border-radius: 6px;
+        font-size: 14px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: background 0.3s ease;
+    }
+
+    .subnav-item:hover {
+        background-color: #f5f5f5;
+    }
+
+    .subnav-item.active {
+        background-color: #dcfce7;
+        color: #166534;
+        font-weight: bold;
+    }
+    
+    .icon{
+        font-size: 16px;
+    }
+        
+    .external {
+        font-size: 10px;
+        color: #888;
+    }
+
+    .crypto-list {
+        padding: 5px 40px;
+        background-color: #f8f9fa;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .crypto-list table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .crypto-list th, .crypto-list td {
+        padding: 12px 16px;
+        text-align: left;
+        border-bottom: 1px solid #eee;
+    }
+
+    .crypto-list th {
+        font-weight: bold;
+        color: #333;
+    }
+
+    .crypto-list td {
+        color: #444;
+    }
+
+    .green {
+        color: green;
+    }
+
+    .red {
+        color: red;
+    }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal {
+      background: #fff;
+      padding: 25px;
+      border-radius: 10px;
+      width: 300px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      position: relative;
+    }
+
+    .modal input, .modal button {
+      width: 100%;
+      margin-bottom: 12px;
+      padding: 10px;
+      font-size: 14px;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      cursor: pointer;
+      font-size: 22px;
+      color: #888;
+    }
+
+    .close-btn:hover {
+      color: #000;
+    }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal {
+      background: #fff;
+      padding: 25px;
+      border-radius: 10px;
+      width: 300px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      position: relative;
+    } 
+
+    .modal input, .modal select, .modal button {
+      width: 100%;
+      margin-bottom: 12px;
+      padding: 10px;
+      font-size: 14px;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 22px;
+      cursor: pointer;
+      color: #999;
+    }
+
+    .close-btn:hover {
+      color: #000;
+    }
+
+    .sparkline {
+      display: inline-block;
+      vertical-align: middle;
+      margin: 0 auto;
+    }
+
+  </style>
+</head>
+<body>
+  <header class="top-header">
+    <div class="logo">🪙 CoinMatrix</div>
+    <nav class="nav-links">
+      <a href="/p5.html">Home</a>
+      <a href="#">Markets</a>
+      <a href="#" onclick="openConverter()">Converter</a>
+      <a href="#">News</a>
+    </nav>
+    <div class="auth-area">
+      <button class="auth-btn" onclick="openSignupModal()">Sign Up</button>
+      <button class="auth-btn" onclick="openLoginModal()">Log In</button>
+    </div>
+    <div id="user-info" style="display: none; font-weight: bold;"> 👤 <span id="username-display"></span> </div>
+  </header>
+  <div class="sub-header"> 
+    <div class="crypto-stats" id="global-crypto-data"></div>
+    <div class="search-bar"> 
+        <input type="text" placeholder="Search for a cryptocurrency">
+    </div>
+  </div>
+    <div class="subnav">
+        <a href="#" class="subnav-item active"><span class="icon">📊</span> All</a>
+        <a href="#" class="subnav-item "><span class="icon">📋</span> Highlights</a>
+        <a href="#" class="subnav-item "><span class="icon">📂</span> Categories</a>
+    </div>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Coin</th>
+        <th>Price</th>
+        <th>24h %</th>
+        <th>Market Cap</th>
+        <th>Last 7 Days</th>
+      </tr>
+    </thead>
+    <tbody id="crypto-table"></tbody>
+  </table>
+  <div class="modal-overlay" id="signupModal">
+    <div class="modal">
+      <span class="close-btn" onclick="closeSignupModal()">×</span>
+      <h2>Sign Up</h2>
+      <form onsubmit="submitSignup(event)">
+        <input type="text" id="signupUsername" placeholder="Username" />
+        <input type="email" id="signupEmail" placeholder="Email" required />
+        <input type="password" id="signupPassword" placeholder="Password" />
+        <button type="submit">Sign Up</button>
+      </form>
+    </div>
+  </div>
+  <div class="modal-overlay" id="loginModal">
+    <div class="modal">
+      <span class="close-btn" onclick="closeLoginModal()">×</span>
+      <h2>Log In</h2>
+      <form onsubmit="submitLogin(event)">
+        <input type="text" id="loginUsername" placeholder="Username" required />
+        <input type="password" id="loginPassword" placeholder="Password" required/>
+        <button type="submit">Log In</button>
+      </form>
+    </div>
+  </div>
+  <div class="modal-overlay" id="converterModal">
+    <div class="modal">
+      <span class="close-btn" onclick="closeConverter()">×</span>
+      <h2>Crypto Converter</h2>
+      <label>
+        Amount:
+        <input type="number" id="cryptoAmount" placeholder="Enter Amount" />
+      </label>
+      <label>
+        From:
+        <select id="cryptoSelect"></select>
+      </label>
+      <label>
+        To:
+        <select id="currencySelect">
+          <option value="usd">USD</option>
+          <option value="inr">INR</option>
+          <option value="eur">EUR</option>
+        </select>
+      </label>
+      <button onclick="convert()">Convert</button>
+      <div id="conversionResult" style="margin-top: 20px; font-weight: bold;"></div>
+    </div>
+  </div>  
+  <div class="crypto-list" id="crypto-table"></div>
+    <script src="globalstats.js" ></script>
+    <script src="highlightbutton.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="crypto-table.js"></script>
+    <script src="converter.js"></script>
+
+</body>
+</html>

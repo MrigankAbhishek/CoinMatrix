@@ -1,26 +1,21 @@
-
-const navItems = document.querySelectorAll('.subnav-item');
-
-navItems.forEach(item => {
-  item.addEventListener('click', function (e) {
-    e.preventDefault(); // Optional: Prevent page jump
-    document.querySelector('.subnav-item.active')?.classList.remove('active');
-    this.classList.add('active');
-  });
-});
+// highlightbutton.js
 
 function openSignupModal() {
   document.getElementById('signupModal').style.display = 'flex';
 }
+
 function closeSignupModal() {
   document.getElementById('signupModal').style.display = 'none';
 }
+
 function openLoginModal() {
   document.getElementById('loginModal').style.display = 'flex';
 }
+
 function closeLoginModal() {
   document.getElementById('loginModal').style.display = 'none';
 }
+
 function showUser(username) {
   document.querySelector('.auth-area').style.display = 'none';
   document.getElementById('user-info').style.display = 'block';
@@ -29,6 +24,7 @@ function showUser(username) {
   // Optional: save to localStorage to persist
   localStorage.setItem('loggedInUser', username);
 }
+
 // Handle signup
 function submitSignup(event) {
   event.preventDefault();

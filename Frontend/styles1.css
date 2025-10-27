@@ -1,0 +1,842 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #fff;
+    color: #333;
+    margin: 0;
+    padding: 5px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+}
+
+thead {
+    background-color: #fff;
+}
+
+th,
+td {
+    padding: 14px 20px;
+    text-align: left;
+    border-collapse: collapse;
+}
+
+td:last-child {
+    width: 150px;
+    /* or whatever fits your graph */
+    text-align: center;
+    vertical-align: middle;
+}
+
+th {
+    font-weight: 600;
+    color: #555;
+    border-collapse: collapse;
+}
+
+td img {
+    vertical-align: right;
+    border-radius: 50%;
+}
+
+.sparkline {
+    display: block;
+    margin: 0;
+    /* remove auto-centering */
+    max-width: 100px;
+    /* uniform width */
+}
+
+tr:hover {
+    background-color: #f5f5f5;
+}
+
+.green {
+    color: #16c784;
+}
+
+.red {
+    color: #ea3943;
+}
+
+canvas {
+    display: block;
+    margin: auto;
+}
+
+.top-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    background-color: #fff;
+    color: rgb(7, 7, 7);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: gold;
+    display: flex;
+    align-items: center;
+}
+
+.nav-links {
+    display: flex;
+    gap: 25px;
+}
+
+.nav-links a {
+    color: rgb(15, 15, 15);
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: gold;
+}
+
+.auth-buttons {
+    display: flex;
+    gap: 4px;
+}
+
+.auth-btn {
+    padding: 8px 16px;
+    background: gold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.auth-area {
+    gap: 10px;
+    align-items: center;
+}
+
+.auth-btn:hover {
+    background-color: #ffd700;
+}
+
+.auth-area,
+#user-info {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.auth-btn,
+.logout-btn {
+    padding: 8px 16px;
+    background: gold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #333;
+}
+
+.logout-btn {
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+}
+
+.sub-header {
+    display: flex;
+    justify-content: space-between;
+    background-color: #fff;
+    padding: 12px 40px;
+    align-items: flex-start;
+    border-bottom: 1px solid #e5e5e5;
+    color: rgb(94, 94, 94);
+    font-style: normal;
+    font-weight: 400;
+    white-space: nowrap;
+    flex-wrap: wrap;
+}
+
+.crypto-stats {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+.search-bar input {
+    padding: 4px 12px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    outline: none;
+    font-size: 14px;
+}
+
+.subnav {
+    display: flex;
+    gap: 20px;
+    padding: 12px 40px;
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+    flex-wrap: wrap;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.subnav-item {
+    padding: 8px 12px;
+    color: #3b3f5c;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.3s ease;
+}
+
+.subnav-item:hover {
+    background-color: #f5f5f5;
+}
+
+.subnav-item.active {
+    background-color: #dcfce7;
+    color: #166534;
+    font-weight: bold;
+}
+
+.icon {
+    font-size: 16px;
+}
+
+.external {
+    font-size: 10px;
+    color: #888;
+}
+
+.crypto-list {
+    padding: 5px 40px;
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.crypto-list table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.crypto-list th,
+.crypto-list td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.crypto-list th {
+    font-weight: bold;
+    color: #333;
+}
+
+.crypto-list td {
+    color: #444;
+}
+
+.green {
+    color: green;
+}
+
+.red {
+    color: red;
+}
+
+.highlights-section {
+    padding: 20px 40px;
+    /* Consistent padding */
+    display: flex;
+    flex-direction: column;
+    /* Stack highlight rows vertically */
+    gap: 20px;
+    /* Space between rows of cards */
+}
+
+.highlight-row {
+    /* New container for each row of 3 cards */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    /* 3 columns, responsive */
+    gap: 20px;
+    /* Space between cards in a row */
+}
+
+.highlight-card {
+    background: #ffffff;
+    border-radius: 8px;
+    /* Slightly more rounded corners */
+    padding: 16px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    /* More pronounced shadow */
+    border: 1px solid #e2e8f0;
+    /* Light border */
+    font-size: 14px;
+    overflow: hidden;
+    /* Ensure content stays within borders */
+}
+
+.highlight-card h4 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    font-size: 16px;
+    color: #2d3748;
+    /* Darker heading text */
+    font-weight: 600;
+    /* Bolder heading */
+    border-bottom: 1px solid #edf2f7;
+    /* Separator line */
+    padding-bottom: 10px;
+    /* Space above the line */
+}
+
+.highlight-card h4 a {
+    font-size: 12px;
+    /* Smaller "more" link */
+    font-weight: 600;
+    color: #334155;
+    transition: color 0.2s;
+    text-decoration: none;
+}
+
+.highlight-card h4 a:hover {
+    color: #334155;
+    text-decoration: none;
+}
+
+.highlight-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.highlight-card li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    /* Padding for list items */
+    border-bottom: 1px dashed #edf2f7;
+    /* Dashed line separator */
+}
+
+.highlight-card li:last-child {
+    border-bottom: none;
+    /* No border for the last item */
+}
+
+.highlight-card .coin-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 120px;
+    /* Ensure enough space for coin name */
+    flex-grow: 1;
+    /* Allows it to take available space */
+}
+
+.highlight-card .coin-info img {
+    width: 20px;
+    /* Slightly smaller icon */
+    height: 20px;
+    border-radius: 50%;
+    /* Make sure icons are round */
+}
+
+.highlight-card .coin-info span {
+    font-weight: 100;
+    color: #2d3748;
+}
+
+.highlight-card .coin-price {
+    font-weight: 100;
+    /* Bolder price */
+    color: #121314;
+    text-align: right;
+    min-width: 80px;
+    /* Ensure price column has enough width */
+}
+
+.highlight-card .coin-change {
+    min-width: 60px;
+    /* Ensure change percentage has enough width */
+    text-align: right;
+    font-weight: 00;
+    margin-left: 10px;
+    /* Space between price and change */
+}
+
+.highlight-card .coin-change.green {
+    color: #38a169;
+    /* Stronger green */
+}
+
+.highlight-card .coin-change.red {
+    color: #e53e3e;
+    /* Stronger red */
+}
+
+/* Specific style for "Next Unlock Date" in "Incoming Token Unlocks" */
+.highlight-card .unlock-date {
+    font-size: 13px;
+    color: #718096;
+    /* Grey text */
+    text-align: right;
+    min-width: 120px;
+    /* Ensure it doesn't wrap too much */
+}
+
+.highlight-card .highlight-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #555;
+    /* Grey color for headings */
+    padding: 5px 0 10px 0;
+    border-bottom: 1px solid #e2e8f0 !important;
+    /* Solid border for header */
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.highlight-card .highlight-header .header-coin {
+    flex-grow: 1;
+    /* Pushes other items to the right */
+}
+
+.highlight-card .highlight-header .header-price {
+    text-align: right;
+    /* <<< ADDED/MODIFIED THIS LINE */
+    min-width: 80px;
+    /* Aligns with .coin-price */
+}
+
+.highlight-card .highlight-header .header-change,
+.highlight-card .highlight-header .header-volume {
+    text-align: right;
+}
+
+.highlight-card .highlight-header .header-change {
+    min-width: 60px;
+    /* Aligns with .coin-change */
+    margin-left: 10px;
+}
+
+.highlight-card .highlight-header.two-column-layout .header-volume {
+    min-width: 100px;
+    /* Aligns with .coin-volume */
+    margin-left: 15px;
+}
+
+.highlight-card .coin-volume {
+    /* <<< MODIFY THIS RULE */
+    font-weight: 100;
+    color: #121314;
+    /* <<< Changed to the requested color */
+    text-align: right;
+    min-width: 100px;
+    margin-left: 15px;
+}
+
+/* --- New Converter Modal Styles --- */
+
+/* Specific styling for the converter modal content area */
+.modal-content.converter-modal {
+    text-align: left;
+    width: 100%;
+    max-width: 420px;
+    /* Optimal width for the converter */
+    padding: 0;
+    /* Remove default padding to use our own structure */
+}
+
+.converter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.converter-header h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #1a202c;
+}
+
+.converter-body {
+    padding: 25px 20px;
+}
+
+.converter-row {
+    margin-bottom: 15px;
+}
+
+.converter-row label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #4a5568;
+    display: block;
+    margin-bottom: 8px;
+}
+
+
+
+.input-container {
+    display: flex;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    overflow: hidden;
+    /* Ensures child elements conform to the rounded corners */
+}
+
+/* Style for the number input and result display */
+#cryptoAmount,
+.result-display {
+    flex-grow: 1;
+    padding: 12px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    background-color: #f9fafb;
+}
+
+.result-display {
+    font-weight: 600;
+    color: #1a202c;
+    background-color: #f0f2f5;
+    /* Slightly different background for read-only */
+}
+
+/* Style for the dropdowns (select) */
+#cryptoSelect,
+#currencySelect {
+    flex-shrink: 0;
+    width: 120px;
+    /* Fixed width for the dropdowns */
+    padding: 12px 8px;
+    border: none;
+    border-left: 1px solid #d1d5db;
+    background-color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    outline: none;
+}
+
+/* Swap Icon */
+.swap-icon-container {
+    text-align: center;
+    margin: 10px 0;
+    color: #9ca3af;
+}
+
+.swap-icon-container .fa-exchange-alt {
+    font-size: 20px;
+    transform: rotate(90deg);
+    /* Vertical swap direction */
+}
+
+/* Convert Button */
+.convert-btn {
+    width: 100%;
+    padding: 14px;
+    background: gold;
+    color: #333;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    margin-top: 20px;
+    transition: background-color 0.2s;
+}
+
+.convert-btn:hover {
+    background-color: #facc15;
+    /* A slightly darker gold for hover */
+}
+
+/* Modals (Login/Signup/Converter) */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(4px);
+}
+
+.modal {
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    width: 360px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    position: relative;
+    text-align: center;
+}
+
+.modal h2 {
+    margin-bottom: 20px;
+    color: #1e293b;
+}
+
+.modal .input-group {
+    position: relative;
+    margin-bottom: 18px;
+}
+
+.modal .input-group i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+}
+
+.modal input {
+    width: 100%;
+    padding: 12px 12px 12px 45px;
+    font-size: 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+}
+
+.modal button {
+    width: 100%;
+    padding: 12px;
+    background: gold;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    transition: background-color 0.2s;
+}
+
+.modal button:hover {
+    background: gold;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+    font-size: 24px;
+    color: #9ca3af;
+    border: none;
+    background: none;
+}
+
+/* Toast Notification */
+.toast {
+    visibility: hidden;
+    min-width: 250px;
+    background-color: #222;
+    color: #fff;
+    text-align: center;
+    border-radius: 8px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1001;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 30px;
+    font-size: 16px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.toast.show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+.toast.error {
+    background-color: #ef4444;
+}
+
+@-webkit-keyframes fadein {
+    from {
+        bottom: 0;
+        opacity: 0;
+    }
+
+    to {
+        bottom: 30px;
+        opacity: 1;
+    }
+}
+
+@keyframes fadein {
+    from {
+        bottom: 0;
+        opacity: 0;
+    }
+
+    to {
+        bottom: 30px;
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes fadeout {
+    from {
+        bottom: 30px;
+        opacity: 1;
+    }
+
+    to {
+        bottom: 0;
+        opacity: 0;
+    }
+}
+
+@keyframes fadeout {
+    from {
+        bottom: 30px;
+        opacity: 1;
+    }
+
+    to {
+        bottom: 0;
+        opacity: 0;
+    }
+}
+
+.sparkline {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 auto;
+}
+
+.bookmark-star {
+    font-size: 20px;
+    cursor: pointer;
+    color: #ccc;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.bookmark-star:hover {
+    transform: scale(1.3);
+    color: #ffd700;
+    /* Gold color on hover */
+}
+
+.bookmark-star.bookmarked {
+    color: #ffd700;
+    /* Gold color when bookmarked */
+}
+
+/* ================================================== */
+/* === PERSONALIZED DASHBOARD STYLES (THE FIX) === */
+/* ================================================== */
+
+/* This styles the main page container */
+.container {
+    width: 100%;            /* CHANGED: Use full width */
+    max-width: none;        /* ADDED: Remove any max-width */
+    margin: 20px 0;         /* CHANGED: Remove auto margin for centering */
+    padding: 0 20px;        /* Keep side padding */
+    box-sizing: border-box; /* ADDED: Include padding in width calculation */
+}
+
+/* This creates the horizontal layout */
+.dashboard-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+/* This styles each individual card */
+.dashboard-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border: 1px solid #e2e8f0;
+    box-sizing: border-box; /* Ensures padding is included in width */
+}
+
+.dashboard-card h4 {
+    font-size: 16px;
+    color: #4a5568;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+/* This contains the coin info */
+.dashboard-card .coin-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* THIS IS THE KEY FIX for the giant image */
+.dashboard-card .coin-info img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    flex-shrink: 0; /* Prevents image from shrinking */
+}
+
+/* Styles for the text next to the image */
+.dashboard-card .coin-details {
+    overflow: hidden; /* Prevents long names from breaking layout */
+}
+
+.dashboard-card .coin-details .name {
+    font-size: 18px;
+    font-weight: bold;
+    color: #1a202c;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dashboard-card .coin-details .symbol {
+    font-size: 14px;
+    color: #6c757d;
+    text-transform: uppercase;
+}
+
+/* Styles for the performance numbers */
+.dashboard-card .performance {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+/* This styles the "Your Watchlist" header */
+.table-header {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    padding-top: 10px;
+}

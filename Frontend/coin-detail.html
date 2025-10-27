@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>CoinMatrix - Coin Details</title>
+    <link rel="stylesheet" href="styles1.css">
+    <link rel="stylesheet" href="coin-detail.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <div id="toast-notification" class="toast"></div>
+
+    <header class="top-header">
+        <div class="logo">🪙 CoinMatrix</div>
+        <nav class="nav-links">
+            <a href="p5.html">Home</a>
+            <a href="#">Markets</a>
+            <a href="#" onclick="openConverter()">Converter</a>
+            <a href="suggestion.html">Suggestions</a>
+        </nav>
+        <div class="auth-area">
+            <button class="auth-btn" onclick="openSignupModal()">Sign Up</button>
+            <button class="auth-btn" onclick="openLoginModal()">Log In</button>
+        </div>
+        <div id="user-info">
+            👤 <span id="username-display"></span>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+    </header>
+
+    <div class="sub-header">
+        <div class="crypto-stats" id="global-crypto-data">Loading global data...</div>
+    </div>
+
+    <div class="subnav">
+        <a href="p5.html" class="subnav-item"><span class="icon">📊</span> All Coins</a>
+        <a href="highlights.html" class="subnav-item"><span class="icon">📋</span> Highlights</a>
+        <a href="bookmarked.html" class="subnav-item"><span class="icon">✨</span> Portfolio</a>
+    </div>
+
+    <main class="container" id="coin-detail-container">
+        <p class="loading-text">Loading coin details...</p>
+    </main>
+
+    <div class="modal-overlay" id="signupModal">
+        <div class="modal"> <button class="close-btn" onclick="closeSignupModal()">×</button>
+            <h2>Create Account</h2>
+            <form onsubmit="submitSignup(event)">
+                <div class="input-group"> <i class="fas fa-user"></i> <input type="text" id="signupUsername" placeholder="Username" required /> </div>
+                <div class="input-group"> <i class="fas fa-envelope"></i> <input type="email" id="signupEmail" placeholder="Email" required /> </div>
+                <div class="input-group"> <i class="fas fa-lock"></i> <input type="password" id="signupPassword" placeholder="Password" required /> </div> <button type="submit">Sign Up</button>
+            </form>
+        </div>
+    </div>
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal"> <button class="close-btn" onclick="closeLoginModal()">×</button>
+            <h2>Welcome Back</h2>
+            <form onsubmit="submitLogin(event)">
+                <div class="input-group"> <i class="fas fa-user"></i> <input type="text" id="loginUsername" placeholder="Username" required /> </div>
+                <div class="input-group"> <i class="fas fa-lock"></i> <input type="password" id="loginPassword" placeholder="Password" required /> </div> <button type="submit">Log In</button>
+            </form>
+        </div>
+    </div>
+    <div class="modal-overlay" id="converterModal">
+        <div class="modal-content converter-modal">
+            <div class="converter-header">
+                <h3>Crypto Converter</h3>
+                <span class="close-btn" onclick="closeConverter()">×</span>
+            </div>
+            <div class="converter-body">
+                <div class="converter-row">
+                    <label for="cryptoAmount">You send</label>
+                    <div class="input-container">
+                        <input type="number" id="cryptoAmount" placeholder="1.0" />
+                        <select id="cryptoSelect">
+                            <option>Loading coins...</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="swap-icon-container">
+                    <i class="fas fa-exchange-alt"></i>
+                </div>
+                <div class="converter-row">
+                    <label>You get</label>
+                    <div class="input-container">
+                        <div id="conversionResult" class="result-display">0.00</div>
+                        <select id="currencySelect">
+                            <option value="usd">USD</option>
+                            <option value="inr">INR</option>
+                            <option value="eur">EUR</option>
+                            <option value="jpy">JPY</option>
+                            <option value="gbp">GBP</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="convert-btn" onclick="convert()">Convert</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/dayjs.min.js"></script>
+    <script src="globalstats.js"></script>
+    <script src="auth.js"></script>
+    <script src="converter.js"></script>
+    <script src="coin-detail.js"></script>
+</body>
+
+</html>
